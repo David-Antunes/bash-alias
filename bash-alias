@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for alias-profile in alias/*; then
+  if [ -f "$alias-profile" ]; then
+    . "$alias-profile"
+  fi
+done

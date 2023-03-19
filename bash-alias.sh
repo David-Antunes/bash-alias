@@ -29,7 +29,7 @@ usage() {
 
 data_dir=alias
 profile=default
-conf=.alias
+
 # Main loop to parse flags
 while getopts 'p: iu c:d: a: r: l: s' opt; do
   case "$opt" in
@@ -73,7 +73,7 @@ if [[ ! -z "$install" ]]; then
   
   # Check if the program as already been added to bashrc
   if ! grep -n -q "$prog" ~/.bashrc ; then
-    echo -e "\nsource $(pwd)/$(basename "$0")" >> ~/.bashrc
+    echo -e "\nsource $(pwd)/bash-alias" >> ~/.bashrc
   fi
 
   echo "Added bash-alias to bashrc."
@@ -86,9 +86,6 @@ if [[ ! -z "$install" ]]; then
     touch $data_dir/default.alias
     echo "Created default.alias"
     
-    echo "default=1" > $data_dir/.alias
-    echo "Created profile management file .alias."
-  
   fi
  
   echo "Bash-alias as been installed."
@@ -97,7 +94,7 @@ fi
 
 if [[ ! -z "$uninstall" ]]; then
 
-  prog=$(basename "$0")
+  prog=bash-alias
   
   if grep -n -q "$prog" ~/.bashrc ; then
     sed -i "/$prog/d" ~/.bashrc
@@ -119,8 +116,7 @@ if [[ ! -z "$create" ]]; then
   
   else
   
-    touch $data_dir/$create.alias
-    echo "$create=1" >> $data_dir/.alias
+    echo -e "$create=1\nif [[ ! -z "$create" ]]; then\n#+\n#-\nfi" >> $data_dir/$create.alias
     echo "Created new profile $create."
   
   fi
@@ -137,14 +133,11 @@ if [[ ! -z "$delete" ]]; then
   
     rm $data_dir/$delete.alias
     echo "Removed file $delete.alias."
-    sed -i "/$delete/d" $data_dir/.alias  
-    echo "Removed entry $delete from .alias."
 
     echo "Removed profile $delete!"
 
   fi
 fi
-
 
 if [[ ! -z "$add" ]]; then
 
@@ -156,6 +149,7 @@ if [[ ! -z "$add" ]]; then
   else
 
     echo "$add" >> $data_dir/$profile.alias
+    sed -i "s/#+/#+\n$add/g" $data_dir/$profile.alias
     echo "Added $add to $profile.alias!"
   
   fi
@@ -184,12 +178,38 @@ if [[ ! -z "$remove" ]]; then
   fi
 fi
 
+if [[ ! -z "$activate" ]]; then
+  
+  if [[ ! -f "$data_dir/$activate.alias" ]]; then
+    
+    echo "Profile $activate doesn't exist!"
+    exit 5
+  
+  else
+    sed -i "s/$activate=.?/$activate=1" $data_dir/$activate.alias
+    echo "Profile $activate activated!"
+  fi
+fi
+
+if [[ ! -z "$deactivate" ]]; then
+
+  if [[ ! -f "$data_dir/$deactivate.alias" ]]; then
+    
+    echo "Profile $deactivate doesn't exist!"
+    exit 6
+  
+  else
+    sed -i "s/$deactivate=.?/$deactivate=0" $data_dir/$deactivate.alias
+    echo "Profile $deactivate deactivated!"
+  fi
+fi
+
 if [[ ! -z "$list" ]]; then
 
   if [[ ! -f "$data_dir/$profile.alias" ]]; then
     
     echo "Profile $profile doesn't exist!"
-    exit 5
+    exit 7
   
   else
     
@@ -197,4 +217,18 @@ if [[ ! -z "$list" ]]; then
     exit 0
 
   fi
+fi
+
+if [[ ! -z "$show" ]]; then
+
+  for prof in $data_dir/*; do
+
+    if [ -f "$prof" ]; then
+      
+      echo $prof
+      cat $data_dir/$prof
+      echo ""
+    
+    fi
+  done
 fi
