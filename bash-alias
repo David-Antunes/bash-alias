@@ -1,7 +1,7 @@
 #!/bin/bash
 
-for alias-profile in alias/*; then
-  if [ -f "$alias-profile" ]; then
-    . "$alias-profile"
+for alias_profile in /Git/bash-alias/alias/*; do
+  if [ -f "$alias_profile" ]; then
+    . "$alias_profile"
   fi
 done
