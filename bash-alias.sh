@@ -31,20 +31,14 @@ usage() {
   echo -e "\tclears all cassandra nodes executing"
 }
 
-data_dir=alias
+data_dir=~/alias
 profile=default
-prog=bash-alias
+
 # Main loop to parse flags
-while getopts ':p: iu c: d: a: r: o: f: l: s' opt; do
+while getopts ':p: c: d: a: r: o: f: l: s' opt; do
   case "$opt" in
   p)
     profile="$OPTARG"
-    ;;
-  i)
-    install=1
-    ;;
-  u)
-    uninstall=1
     ;;
   c)
     create="$OPTARG"
@@ -82,42 +76,7 @@ if [[ $# -eq 0 ]]; then
   exit 0
 fi
 
-# Restrictions
-
-if [[ ! -z "$install" ]]; then
-  
-  # Check if the program as already been added to bashrc
-  if ! grep -n -q "$prog" ~/.bashrc ; then
-    echo -e "\nsource $(pwd)/$prog" >> ~/.bashrc
-  fi
-
-  echo "Added bash-alias to bashrc."
-
-  if [[ ! -d $data_dir ]]; then 
-
-    mkdir -p $data_dir
-    echo "Created data folder."
-    
-    touch $data_dir/default.alias
-    echo -e "#!/bin/bash\n\ndefault=1\n\nif [  \$default -eq 1 ]; then\n\t#+\n\t#-\nfi\n\nunset default" > alias/default.alias 
-    echo "Created default.alias"
-    
-  fi
- 
-  echo "Bash-alias as been installed."
-
-fi
-
-if [[ ! -z "$uninstall" ]]; then
-
-  if grep -n -q "$prog" ~/.bashrc ; then
-    sed -i "/$prog/d" ~/.bashrc
-  fi
-  
-    echo "Uninstalled bash-alias to bashrc."
-  echo "If you want to start from scratch, delete $data_dir folder in $(pwd)/$data_dir."
-
-fi
+# Commands
 
 if [[ ! -z "$create" ]]; then
 
