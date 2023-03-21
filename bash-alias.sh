@@ -78,6 +78,8 @@ fi
 
 # Commands
 
+
+# Creates a new alias profile in folder alias
 if [[ ! -z "$create" ]]; then
 
   if [[ -f "$data_dir/$create.alias" ]]; then
@@ -93,6 +95,7 @@ if [[ ! -z "$create" ]]; then
   fi
 fi
 
+# Deletes an existing profile
 if [[ ! -z "$delete" ]]; then
 
   if [[ ! -f "$data_dir/$delete.alias" ]]; then
@@ -110,6 +113,8 @@ if [[ ! -z "$delete" ]]; then
   fi
 fi
 
+
+# Adds a new alias to a provided profile. If none is provided, alias goes to default.alias
 if [[ ! -z "$add" ]]; then
 
   if [[ ! -f "$data_dir/$profile.alias" ]]; then
@@ -131,6 +136,7 @@ if [[ ! -z "$add" ]]; then
   fi
 fi
 
+# Removes an existing alias of a profile. If none is provided, deletes from default.alias
 if [[ ! -z "$remove" ]]; then
 
   if [[ ! -f "$data_dir/$profile.alias" ]]; then
@@ -158,6 +164,7 @@ if [[ ! -z "$remove" ]]; then
   fi
 fi
 
+# Activates an existing alias profile
 if [[ ! -z "$activate" ]]; then
   
   if [[ ! -f "$data_dir/$activate.alias" ]]; then
@@ -171,6 +178,7 @@ if [[ ! -z "$activate" ]]; then
   fi
 fi
 
+# Deactivates an existing alias profile
 if [[ ! -z "$deactivate" ]]; then
 
   if [[ ! -f "$data_dir/$deactivate.alias" ]]; then
@@ -184,6 +192,7 @@ if [[ ! -z "$deactivate" ]]; then
   fi
 fi
 
+# Prints the alias of the provided alias profile
 if [[ ! -z "$list" ]]; then
 
   if [[ ! -f "$data_dir/$list.alias" ]]; then
@@ -199,6 +208,7 @@ if [[ ! -z "$list" ]]; then
   fi
 fi
 
+# Lists all existing profiles and their active status
 if [[ ! -z "$show" ]]; then
 
   for prof in $data_dir/*; do
@@ -212,5 +222,6 @@ if [[ ! -z "$show" ]]; then
   done
 fi
 
+# Sources bashrc to ensure the changes made are imediate
 source ~/.bashrc
 echo "Reload complete!"
