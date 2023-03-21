@@ -1,7 +1,5 @@
 #!/bin/bash
-
-usage() {
-  echo "Manage various alias profiles."
+usage() { echo "Manage various alias profiles."
   echo "Usage: $(basename "$0") [OPTION]..."
   echo "-i"
   echo -e "\tinstalls this program."
@@ -53,18 +51,19 @@ if [[ ! -z "$install" ]]; then
     sed -i "s|data_dir=.*|data_dir=$install_dir/alias|g" $install_dir/bash-alias.sh
     echo "Copied program files."
 
-    ln -s ~/.config/bash-alias/bash_alias.sh $script_dir/bash-alias.sh
+    ln -s ~/.config/bash-alias/bash-alias.sh $script_dir/bash-alias.sh
     echo "Created Symlink for bash-alias to .scripts folder."
 
     mkdir -p $install_dir/alias
     echo "Created alias folder."
     
-    echo -e "#!/bin/bash\n\ndefault=1\n\nif [  \$default -eq 1 ]; then\n\t#+\n\t#-\nfi\n\nunset default" > $install_dir/alias/default.alias 
+    echo -e "#!/bin/bash\n\ndefault=1\n\nif [  \$default -eq 1 ]; then\n\t:\n\t#+\n\t#-\nfi\n\nunset default" > $install_dir/alias/default.alias 
     
     echo "Created default.alias"
     
+  else
+    ln -s ~/.config/bash-alias/bash-alias.sh $script_dir/bash-alias.sh
   fi
- 
   echo "Bash-alias as been installed."
 
 fi
@@ -80,5 +79,4 @@ if [[ ! -z "$uninstall" ]]; then
     echo "If you want to start from scratch, delete alias folder in $install_dir."
 
 fi
-
 

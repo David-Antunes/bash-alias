@@ -8,7 +8,7 @@ usage() {
   echo "Usage: $(basename "$0") [OPTION]..."
   echo ""
   echo "-p <profile>"
-  echo -e "\t profile to be modified"
+  echo -e "\t profile to modify."
   echo "-i"
   echo -e "\tinstalls this program."
   echo "-u"
@@ -26,9 +26,9 @@ usage() {
   echo "-f <alias>"
   echo -e "\tdeactivates a profile."
   echo "-l <profile>"
-  echo -e "\tlists all existing alias from the given profile"
+  echo -e "\tlists all existing alias from the given profile."
   echo "-s"
-  echo -e "\tclears all cassandra nodes executing"
+  echo -e "\tshows all existing profiles and their active status."
 }
 
 data_dir=~/alias
@@ -89,7 +89,7 @@ if [[ ! -z "$create" ]]; then
   
   else
   
-    echo -e "#!/bin/bash\n\n$create=1\n\nif [  \$"$create" -eq 1 ]; then\n\t#+\n\t#-\nfi\n\nunset "$create"" >> $data_dir/$create.alias
+    echo -e "#!/bin/bash\n\n$create=1\n\nif [  \$"$create" -eq 1 ]; then\n\t:\n\t#+\n\t#-\nfi\n\nunset "$create"" >> $data_dir/$create.alias
     echo "Created new profile $create."
   
   fi

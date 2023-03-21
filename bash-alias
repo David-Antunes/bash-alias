@@ -2,6 +2,8 @@
 
 alias_path=~/alias
 
+# Main loop program to load every alias
+
 for alias_profile in $alias_path/*; do
   if [ -f "$alias_profile" ]; then
     . "$alias_profile"
