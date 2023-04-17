@@ -14,9 +14,9 @@ usage() {
   echo "-u"
   echo -e "\tuninstalls this program."
   echo "-c <profile>"
-  echo -e "creates a new alias profile."
+  echo -e "\tcreates a new alias profile."
   echo "-d <profile>"
-  echo -e "deletes an existing alias profile."
+  echo -e "\tdeletes an existing alias profile."
   echo "-a <alias={cmd}>"
   echo -e "\tadds a new alias to an existing profile."
   echo "-r <alias>"
@@ -80,9 +80,9 @@ fi
 
 
 # Creates a new alias profile in folder alias
-if [[ ! -z "$create" ]]; then
+if [[ -n "$create" ]]; then
 
-  if [[ -f "$data_dir/$create.alias" ]]; then
+  if [ -f "$data_dir/$create.alias" ]; then
   
     echo "Profile $create already created!"
     exit 1
@@ -96,7 +96,7 @@ if [[ ! -z "$create" ]]; then
 fi
 
 # Deletes an existing profile
-if [[ ! -z "$delete" ]]; then
+if [[ -n "$delete" ]]; then
 
   if [[ ! -f "$data_dir/$delete.alias" ]]; then
     
@@ -115,7 +115,7 @@ fi
 
 
 # Adds a new alias to a provided profile. If none is provided, alias goes to default.alias
-if [[ ! -z "$add" ]]; then
+if [[ -n "$add" ]]; then
 
   if [[ ! -f "$data_dir/$profile.alias" ]]; then
     
@@ -137,7 +137,7 @@ if [[ ! -z "$add" ]]; then
 fi
 
 # Removes an existing alias of a profile. If none is provided, deletes from default.alias
-if [[ ! -z "$remove" ]]; then
+if [[ -n "$remove" ]]; then
 
   if [[ ! -f "$data_dir/$profile.alias" ]]; then
     
@@ -165,7 +165,7 @@ if [[ ! -z "$remove" ]]; then
 fi
 
 # Activates an existing alias profile
-if [[ ! -z "$activate" ]]; then
+if [[ -n "$activate" ]]; then
   
   if [[ ! -f "$data_dir/$activate.alias" ]]; then
     
@@ -179,7 +179,7 @@ if [[ ! -z "$activate" ]]; then
 fi
 
 # Deactivates an existing alias profile
-if [[ ! -z "$deactivate" ]]; then
+if [[ -n "$deactivate" ]]; then
 
   if [[ ! -f "$data_dir/$deactivate.alias" ]]; then
     
@@ -193,7 +193,7 @@ if [[ ! -z "$deactivate" ]]; then
 fi
 
 # Prints the alias of the provided alias profile
-if [[ ! -z "$list" ]]; then
+if [[ -n "$list" ]]; then
 
   if [[ ! -f "$data_dir/$list.alias" ]]; then
     
@@ -209,7 +209,7 @@ if [[ ! -z "$list" ]]; then
 fi
 
 # Lists all existing profiles and their active status
-if [[ ! -z "$show" ]]; then
+if [[ -n "$show" ]]; then
 
   for prof in $data_dir/*; do
 
