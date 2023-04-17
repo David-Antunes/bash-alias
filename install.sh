@@ -30,7 +30,7 @@ fi
 install_dir=~/.config/bash-alias
 script_dir=~/.scripts
 
-if [[ ! -z "$install" ]]; then
+if [[ -n "$install" ]]; then
   
   # Check if the program as already been added to bashrc
   if ! grep -n -q "bash-alias" ~/.bashrc ; then
@@ -62,17 +62,24 @@ if [[ ! -z "$install" ]]; then
     echo "Created default.alias"
     
   else
+    echo "Existing bash-alias folder. Updating bash-alias and bash-alias.sh."
+    cp bash-alias $install_dir/bash-alias
+    cp bash-alias.sh $install_dir/bash-alias.sh
+    sed -i "s|alias_path=.*|alias_path=$install_dir/alias|g" $install_dir/bash-alias
+    sed -i "s|data_dir=.*|data_dir=$install_dir/alias|g" $install_dir/bash-alias.sh
     ln -s ~/.config/bash-alias/bash-alias.sh $script_dir/bash-alias.sh
   fi
   echo "Bash-alias as been installed."
 
 fi
 
-if [[ ! -z "$uninstall" ]]; then
+if [[ -n "$uninstall" ]]; then
 
   if grep -n -q "bash-alias" ~/.bashrc ; then
     sed -i "/bash-alias/d" ~/.bashrc
     rm $script_dir/bash-alias.sh
+    rm $install_dir/bash-alias
+    rm $install_dir/bash-alias.sh
   fi
   
     echo "Uninstalled bash-alias to bashrc."
